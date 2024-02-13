@@ -1,0 +1,19 @@
+.block {
+  width: 100%;
+  height: 325px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.block-form {
+  width: 100%;
+  height: 675px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ion-modal {
+  --height: auto;
+}

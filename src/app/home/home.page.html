@@ -1,0 +1,68 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-item fill="solid" lines="none">
+      <ion-buttons slot="start">
+        <ion-button routerLink="/login">
+          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-label>Bienvenido, {{ email || 'invitado' }}</ion-label>
+      <ion-avatar slot="end">
+        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-searchbar mode="ios" placeholder="Buscar por nombre" (ionChange)="onSearchChange($event)"></ion-searchbar>
+
+  <ion-item style="--background: transparent;">
+    <ion-label>Dirigete al catálogo para visualizar los detalles de cada pokémon.</ion-label>
+  </ion-item>
+
+  <ion-item lines="none" style="--background: transparent;">
+    <ion-label color="medium">¡Ya tienes todos los pokemones!</ion-label>
+  </ion-item>
+
+  <ion-grid>
+    <ion-row>
+
+      <!-- Bucle para mostrar los Pokémones -->
+      <ng-container *ngFor="let pokemon of pokemonFiltrados; let i = index">
+        <ng-container *ngIf="i < 4">
+          <ion-col size="6" size-md="4" size-lg="2">
+            <!-- Inicio del bloque -->
+            <ion-card>
+              <ion-card-header>
+                <ion-checkbox [(ngModel)]="pokemon.favorito">
+                  <ion-label color="primary"><b>{{ pokemon.nombre }}</b></ion-label>
+                </ion-checkbox>
+              </ion-card-header>
+              <img [src]="obtenerUrlImagen(pokemon.nombre)"/>
+              <ion-card-content>
+                <ion-text>
+                  <p>
+                    <span *ngFor="let tipo of pokemon.tipos; let isLast = last">
+                      {{ tipo }}
+                      <ng-container *ngIf="!isLast"> / </ng-container>
+                    </span>
+                  </p>
+                </ion-text>
+              </ion-card-content>
+            </ion-card>
+            <!-- Fin del bloque -->
+          </ion-col>
+        </ng-container>
+      </ng-container>
+      <!-- Fin del bucle -->
+
+    </ion-row>
+  </ion-grid>
+
+  <ion-button expand="block" color="secondary" routerLink="/tabs/catalogue" mode="ios">
+    Ver todos los pokémones (20)
+  </ion-button>
+
+</ion-content>

@@ -1,0 +1,162 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-item fill="solid" lines="none">
+      <ion-buttons slot="start">
+        <ion-button routerLink="/login">
+          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-label>Bienvenido, {{ email || 'invitado' }}</ion-label>
+      <ion-avatar slot="end">
+        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-item style="--background: transparent;">
+    <ion-label color="medium">Todos tus pokémones</ion-label>
+    <ion-item lines="none" style="--background: transparent;">
+      <ion-text slot="start" color="medium">Ordenar por:</ion-text>
+      <ion-select color="tertiary" [(ngModel)]="ordenSeleccionado" (ionChange)="ordenarPokemones()">
+        <ion-select-option value="favoritos">Favoritos</ion-select-option>
+        <ion-select-option value="vida">Vida</ion-select-option>
+        <ion-select-option value="ataque">Ataque</ion-select-option>
+        <ion-select-option value="defensa">Defensa</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-item>
+
+  <ion-item style="--background: transparent;">
+    <ion-label>Haz clic sobre el pokémon del que deseas consultar información.</ion-label>
+  </ion-item>
+
+  <ion-button id="open-modal" expand="block" color="secondary" class="ion-margin">Registrar pokémon</ion-button>
+
+  <ion-grid>
+    <ion-row>
+
+      <!-- Bucle para mostrar los Pokémones -->
+      <ng-container *ngFor="let pokemon of pokemonFiltrados">
+        <ion-col size="6" size-md="4" size-lg="2">
+          <!-- Inicio del bloque -->
+          <ion-card>
+            <ion-card-header>
+              <ion-checkbox [(ngModel)]="pokemon.favorito">
+                <ion-label color="primary"><b>{{ pokemon.nombre }}</b></ion-label>
+              </ion-checkbox>
+            </ion-card-header>
+            <img [src]="obtenerUrlImagen(pokemon.nombre)" [id]="'open-modal-' + pokemon.nombre.toLowerCase()" />
+            <ion-card-content>
+              <ion-text>
+                <p>
+                  <span *ngFor="let tipo of pokemon.tipos; let isLast = last">
+                    {{ tipo }}
+                    <ng-container *ngIf="!isLast"> / </ng-container>
+                  </span>
+                </p>
+              </ion-text>
+            </ion-card-content>
+          </ion-card>
+          <!-- Fin del bloque -->
+        </ion-col>
+      </ng-container>
+      <!-- Fin del bucle -->
+
+    </ion-row>
+  </ion-grid>
+
+  <!-- Bucle para mostrar los Pokémones -->
+  <ng-container *ngFor="let pokemon of pokemones">
+    <!-- Modal del Pokémon actual -->
+    <!-- Dentro del bucle para mostrar los Pokémones -->
+    <ion-modal [initialBreakpoint]="1" [breakpoints]="[0, 1]" [trigger]="'open-modal-' + pokemon.nombre.toLowerCase()">
+      <ng-template>
+        <div class="block">
+          <ion-content class="ion-padding">
+            <ion-item class="ion-no-padding">
+              <ion-card class="ion-no-margin">
+                <ion-card-header>
+                  <ion-label><b>{{ pokemon.nombre }}</b></ion-label>
+                </ion-card-header>
+                <img [src]="obtenerUrlImagen(pokemon.nombre)" />
+                <ion-card-content>
+                  <ion-text>
+                    <p>
+                      <span *ngFor="let tipo of pokemon.tipos; let isLast = last">
+                        {{ tipo }}
+                        <ng-container *ngIf="!isLast"> / </ng-container>
+                      </span>
+                    </p>
+                  </ion-text>
+                </ion-card-content>
+              </ion-card>
+              <ion-card class="ion-no-margin ion-no-padding ion-no-border">
+                <ion-card-content>
+                  <ion-text>Puntos de vida</ion-text>
+                  <ion-progress-bar [value]="pokemon.vida" class="ion-margin-bottom"></ion-progress-bar>
+                  <ion-text>Ataque</ion-text>
+                  <ion-progress-bar [value]="pokemon.ataque" class="ion-margin-bottom"></ion-progress-bar>
+                  <ion-text>Defensa</ion-text>
+                  <ion-progress-bar [value]="pokemon.defensa" class="ion-margin-bottom"></ion-progress-bar>
+                  <ion-text>{{ pokemon.descripcion }}</ion-text>
+                  <!-- Utiliza directamente la propiedad 'descripcion' del Pokémon -->
+                </ion-card-content>
+              </ion-card>
+            </ion-item>
+          </ion-content>
+        </div>
+      </ng-template>
+    </ion-modal>
+  </ng-container>
+  <!-- Fin del bucle -->
+
+  <!-- Modal para añadir un registro de un pokemon -->
+  <ion-modal [initialBreakpoint]="1" [breakpoints]="[0, 1]" trigger="open-modal" class="ion-padding">
+    <ng-template>
+      <div class="block-form">
+        <ion-content class="ion-padding">
+          <form #nuevoPokemonForm="ngForm">
+            <ion-item class="ion-margin-vertical" style="--background: transparent;">
+              <ion-label position="stacked">Nombre</ion-label>
+              <ion-input type="text" [(ngModel)]="nuevoPokemon.nombre" name="nombre" required></ion-input>
+            </ion-item>
+            <ion-item class="ion-margin-vertical" style="--background: transparent;">
+              <ion-label position="stacked">Tipo</ion-label>
+              <ion-select multiple="true" [(ngModel)]="nuevoPokemon.tipos" cancelText="Cancelar" okText="Aceptar"
+                name="tipo">
+                <ion-select-option *ngFor="let tipo of tiposPokemon" [value]="tipo">{{ tipo }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="ion-margin-vertical" style="--background: transparent;">
+              <ion-label position="stacked">Descripción</ion-label>
+              <ion-textarea rows="3" [(ngModel)]="nuevoPokemon.descripcion" name="descripcion" required></ion-textarea>
+            </ion-item>
+            <ion-item lines="none" style="--background: transparent;">
+              <ion-label position="stacked">Puntos de vida</ion-label>
+              <ion-range name="vida" min="0" max="1" step="0.01" [(ngModel)]="nuevoPokemon.vida" color="primary">
+              </ion-range>
+            </ion-item>
+            <ion-item lines="none" style="--background: transparent;">
+              <ion-label position="stacked">Ataque</ion-label>
+              <ion-range name="ataque" min="0" max="1" step="0.01" [(ngModel)]="nuevoPokemon.ataque" color="primary">
+              </ion-range>
+            </ion-item>
+            <ion-item lines="none" style="--background: transparent;">
+              <ion-label position="stacked">Defensa</ion-label>
+              <ion-range name="defensa" min="0" max="1" step="0.01" [(ngModel)]="nuevoPokemon.defensa" color="primary">
+              </ion-range>
+            </ion-item>
+            <ion-item class="ion-margin-vertical" style="--background: transparent;">
+              <ion-label>Favorito</ion-label>
+              <ion-checkbox name="favorito" [(ngModel)]="nuevoPokemon.favorito"></ion-checkbox>
+            </ion-item>
+            <ion-button expand="block" (click)="agregarPokemon()">Agregar
+              Pokémon</ion-button>
+          </form>
+        </ion-content>
+      </div>
+    </ng-template>
+  </ion-modal>
