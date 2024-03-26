@@ -1,8 +1,8 @@
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <ion-img src="\assets\img\logo.png" class="ion-margin-vertical"></ion-img>
+  <ion-img src="\assets\img\logo.png" class="ion-margin-vertical ion-padding"></ion-img>
 
-  <ion-item class="ion-margin-vertical" lines="none" style="--background: transparent;">
+  <ion-item class="ion-margin-vertical transparent" lines="none">
     <ion-input
       type="email"
       name="email"
@@ -18,7 +18,7 @@
     ></ion-input>
   </ion-item>
   
-  <ion-item class="ion-margin-vertical" lines="none" style="--background: transparent;">
+  <ion-item class="ion-margin-vertical transparent" lines="none">
     <ion-input
       type="password"
       name="password"
@@ -33,17 +33,19 @@
     ></ion-input>
   </ion-item>
 
-  <ion-item class="ion-margin-vertical" lines="none" style="--background: transparent;">
+  <!-- <ion-item class="ion-margin-vertical" lines="none" >
     <ion-checkbox slot="start"></ion-checkbox>
     <ion-text>
       <p>Recuérdame</p>
     </ion-text>
-  </ion-item>
+  </ion-item> -->
 
-  <ion-button (click)="login()" expand="block" [disabled]="emailField.invalid || passwordField.invalid" class="ion-margin-horizontal">Iniciar sesión</ion-button>
+  <!-- <ion-nav-link [component]="component" routerDirection="forward"> -->
+    <ion-button routerLink="/tabs/home" (click)="login()" expand="block" [disabled]="emailField.invalid || passwordField.invalid" class="ion-margin-horizontal">Iniciar sesión</ion-button>
+  <!-- </ion-nav-link> -->
 
-  <ion-text class="ion-text-center" button="true">
+  <!-- <ion-text class="ion-text-center" button="true">
     <p>¿Olvidaste tu contraseña?</p>
-  </ion-text>
+  </ion-text> -->
 
 </ion-content>

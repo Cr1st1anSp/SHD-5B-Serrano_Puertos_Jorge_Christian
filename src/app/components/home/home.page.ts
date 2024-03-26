@@ -1,22 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
-  constructor(private route: ActivatedRoute) { }
-
-  email: string = '';
-
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.email = params['email'];
-    });
-  }
+  constructor() { }
 
   pokemones = [
     {
@@ -40,7 +31,7 @@ export class HomePage implements OnInit {
     {
       nombre: 'Bulbasaur',
       tipos: ['Planta', 'Veneno'],
-      favorito: true,
+      favorito: false,
       vida: 0.45,
       ataque: 0.49,
       defensa: 0.49,

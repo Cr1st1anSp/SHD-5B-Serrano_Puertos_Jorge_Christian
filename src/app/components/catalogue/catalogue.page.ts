@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -8,12 +7,11 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './catalogue.page.html',
   styleUrls: ['./catalogue.page.scss'],
 })
-export class CataloguePage implements OnInit {
+export class CataloguePage {
 
-  // FormGroup para manejar los campos del formulario
   pokemonForm: FormGroup;
 
-  constructor(private modalCtrl: ModalController, private route: ActivatedRoute, private formBuilder: FormBuilder) {
+  constructor(private modalCtrl: ModalController, private formBuilder: FormBuilder) {
     this.pokemonForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       tipo: ['', Validators.required],
@@ -22,14 +20,6 @@ export class CataloguePage implements OnInit {
       ataque: [0, Validators.required],
       defensa: [0, Validators.required],
       favorito: [false]
-    });
-  }
-
-  email: string = '';
-
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.email = params['email'];
     });
   }
 
@@ -57,7 +47,7 @@ export class CataloguePage implements OnInit {
     {
       nombre: 'Bulbasaur',
       tipos: ['Planta', 'Veneno'],
-      favorito: true,
+      favorito: false,
       vida: 0.45,
       ataque: 0.49,
       defensa: 0.49,

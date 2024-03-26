@@ -1,24 +1,10 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-item fill="solid" lines="none">
-      <ion-buttons slot="start">
-        <ion-button routerLink="/login">
-          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-label>Bienvenido, {{ email || 'invitado' }}</ion-label>
-      <ion-avatar slot="end">
-        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-    </ion-item>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <ion-item style="--background: transparent;">
+  <ion-item class="transparent">
     <ion-label color="medium">Todos tus pokémones</ion-label>
-    <ion-item lines="none" style="--background: transparent;">
+    <ion-item lines="none" class="transparent">
       <ion-text slot="start" color="medium">Ordenar por:</ion-text>
       <ion-select color="tertiary" [(ngModel)]="ordenSeleccionado" (ionChange)="ordenarPokemones()">
         <ion-select-option value="favoritos">Favoritos</ion-select-option>
@@ -29,7 +15,7 @@
     </ion-item>
   </ion-item>
 
-  <ion-item style="--background: transparent;">
+  <ion-item class="transparent">
     <ion-label>Haz clic sobre el pokémon del que deseas consultar información.</ion-label>
   </ion-item>
 
@@ -119,39 +105,32 @@
       <div class="block-form">
         <ion-content class="ion-padding">
           <form #nuevoPokemonForm="ngForm">
-            <ion-item class="ion-margin-vertical" style="--background: transparent;">
-              <ion-label position="stacked">Nombre</ion-label>
-              <ion-input type="text" [(ngModel)]="nuevoPokemon.nombre" name="nombre" required></ion-input>
+            <ion-item class="ion-margin-vertical transparent">
+              <ion-input type="text" [(ngModel)]="nuevoPokemon.nombre" name="nombre" required label="Nombre" labelPlacement="stacked"></ion-input>
             </ion-item>
-            <ion-item class="ion-margin-vertical" style="--background: transparent;">
-              <ion-label position="stacked">Tipo</ion-label>
+            <ion-item class="ion-margin-vertical transparent">
               <ion-select multiple="true" [(ngModel)]="nuevoPokemon.tipos" cancelText="Cancelar" okText="Aceptar"
-                name="tipo">
+                name="tipo" label="Tipos" labelPlacement="stacked">
                 <ion-select-option *ngFor="let tipo of tiposPokemon" [value]="tipo">{{ tipo }}</ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-item class="ion-margin-vertical" style="--background: transparent;">
-              <ion-label position="stacked">Descripción</ion-label>
-              <ion-textarea rows="3" [(ngModel)]="nuevoPokemon.descripcion" name="descripcion" required></ion-textarea>
+            <ion-item class="ion-margin-vertical transparent">
+              <ion-textarea rows="3" [(ngModel)]="nuevoPokemon.descripcion" name="descripcion" required label="Descripción" labelPlacement="stacked"></ion-textarea>
             </ion-item>
-            <ion-item lines="none" style="--background: transparent;">
-              <ion-label position="stacked">Puntos de vida</ion-label>
-              <ion-range name="vida" min="0" max="1" step="0.01" [(ngModel)]="nuevoPokemon.vida" color="primary">
+            <ion-item lines="none" class="transparent">
+              <ion-range name="vida" min="0" max="1" step="0.01" [(ngModel)]="nuevoPokemon.vida" color="primary" label="Puntos de vida" labelPlacement="stacked">
               </ion-range>
             </ion-item>
-            <ion-item lines="none" style="--background: transparent;">
-              <ion-label position="stacked">Ataque</ion-label>
-              <ion-range name="ataque" min="0" max="1" step="0.01" [(ngModel)]="nuevoPokemon.ataque" color="primary">
+            <ion-item lines="none" class="transparent">
+              <ion-range name="ataque" min="0" max="1" step="0.01" [(ngModel)]="nuevoPokemon.ataque" color="primary" label="Ataque" labelPlacement="stacked">
               </ion-range>
             </ion-item>
-            <ion-item lines="none" style="--background: transparent;">
-              <ion-label position="stacked">Defensa</ion-label>
-              <ion-range name="defensa" min="0" max="1" step="0.01" [(ngModel)]="nuevoPokemon.defensa" color="primary">
+            <ion-item lines="none" class="transparent">
+              <ion-range name="defensa" min="0" max="1" step="0.01" [(ngModel)]="nuevoPokemon.defensa" color="primary" label="Defensa" labelPlacement="stacked">
               </ion-range>
             </ion-item>
-            <ion-item class="ion-margin-vertical" style="--background: transparent;">
-              <ion-label>Favorito</ion-label>
-              <ion-checkbox name="favorito" [(ngModel)]="nuevoPokemon.favorito"></ion-checkbox>
+            <ion-item class="ion-margin-vertical" class="transparent">
+              <ion-checkbox name="favorito" [(ngModel)]="nuevoPokemon.favorito" labelPlacement="end" justify="start">Favorito</ion-checkbox>
             </ion-item>
             <ion-button expand="block" (click)="agregarPokemon()">Agregar
               Pokémon</ion-button>
